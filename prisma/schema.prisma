@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// one to one 
+model Student {
+  id      Int      @id @default(autoincrement())
+  name    String
+  age     Int
+  address Address?
+}
+
+model Address {
+  id        Int     @id @default(autoincrement())
+  city      String
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId Int     @unique
+}
+
+//one to many
+
+// model Student {
+//   id      Int       @id @default(autoincrement())
+//   name    String
+//   age     Int
+//   address Address[]
+// }
+
+// model Address {
+//   id        Int     @id @default(autoincrement())
+//   city      String
+//   student   Student @relation(fields: [studentId], references: [id])
+//   studentId Int
+// }
+
+//many to many
+
+// model Student {
+//   id      Int       @id @default(autoincrement())
+//   name    String
+//   age     Int
+//   address Address[]
+// }
+
+// model Address {
+//   id      Int       @id @default(autoincrement())
+//   city    String
+//   student Student[]
+// }
